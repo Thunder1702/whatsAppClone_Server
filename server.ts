@@ -6,8 +6,6 @@ import SocketIOStatic,{ Socket } from "socket.io";
 import dotenv from "dotenv";
 dotenv.config();
 
-let cfg = require("./config.json"); // config file
-
 
 const app = express();
 

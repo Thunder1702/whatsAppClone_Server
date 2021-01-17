@@ -2,8 +2,6 @@ import { Client } from "pg";
 import dotenv from  "dotenv";
 dotenv.config();
 
-let cfg = require("./config.json");
-
 let client: Client;
 
 export function initDb() {
