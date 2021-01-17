@@ -1,0 +1,12 @@
+{
+    "database": {
+        "host": "localhost",
+        "user": "gallery_root",
+        "password": "password",
+        "db": "WhatsApp"
+    },
+    "server": {
+        "host": "localhost",
+        "port": 3000
+    }
+}
