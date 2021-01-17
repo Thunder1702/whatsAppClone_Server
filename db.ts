@@ -1,14 +1,17 @@
 import { Client } from "pg";
+import dotenv from  "dotenv";
+dotenv.config();
+
 let cfg = require("./config.json");
 
 let client: Client;
 
 export function initDb() {
   client = new Client({
-    host: cfg.database.host,
-    user: cfg.database.user,
-    password: cfg.database.password,
-    database: cfg.database.db,
+    host: process.env.database_host,
+    user: process.env.database_user,
+    password:process.env.database_password,
+    database:process.env.database_db,
   });
   return client.connect();
 }

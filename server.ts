@@ -3,8 +3,11 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { initDb } from "./db";
 import SocketIOStatic,{ Socket } from "socket.io";
+import dotenv from "dotenv";
+dotenv.config();
 
 let cfg = require("./config.json"); // config file
+
 
 const app = express();
 
@@ -145,8 +148,8 @@ sio.on("connection", (socket: Socket) => {
 
 initDb().then(
   () => {
-    server.listen(cfg.server.port, () => {
-      console.log("Listening on port " + cfg.server.port + "...");
+    server.listen(process.env.server_port, () => {
+      console.log("Listening on port " +process.env.server_port + "...");
     });
   },
   () => {
