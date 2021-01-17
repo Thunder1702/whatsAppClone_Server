@@ -146,8 +146,8 @@ sio.on("connection", (socket: Socket) => {
 
 initDb().then(
   () => {
-    server.listen(process.env.server_port, () => {
-      console.log("Listening on port " +process.env.server_port + "...");
+    server.listen(process.env.PORT, () => {
+      console.log("Listening on port " +process.env.PORT + "...");
     });
   },
   () => {
