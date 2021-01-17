@@ -3,10 +3,10 @@ import fs from "fs";
 import path from "path";
 import jwt from "jsonwebtoken";
 
-const privateKEY = fs.readFileSync(
-  path.join(__dirname, "../private.key"),
-  "utf8"
-);
+// const privateKEY = fs.readFileSync(
+//   path.join(__dirname, "../private.key"),
+//   "utf8"
+// );
 
 export function checkAuth(req: any, res: Response, next: NextFunction) {
   const token:any = req.headers.authorization;//.split(" ")[1];
@@ -21,7 +21,7 @@ export function checkAuth(req: any, res: Response, next: NextFunction) {
     
     //console.log(token)
     // throws error if invalid
-    let payload: any = jwt.verify(token, privateKEY);
+    let payload: any = jwt.verify(token, process.env.private_key as string);
     //console.log(payload);
     req.user = { username: payload.user};
     next();

@@ -5,10 +5,10 @@ import path from "path";
 
 const bcrypt = require('bcrypt');
 
-const privateKEY = fs.readFileSync(
-  path.join(__dirname, "../private.key"),
-  "utf8"
-);
+// const privateKEY = fs.readFileSync(
+//   path.join(__dirname, "../private.key"),
+//   "utf8"
+// );
 
 const router = express.Router();
 import { getDb } from "../db";
@@ -35,7 +35,7 @@ router.post("/", (req, res) => {
           {
             user: user.name,
           },
-          privateKEY,
+          process.env.private_key as string,
           {
             expiresIn: "1h",
           }
