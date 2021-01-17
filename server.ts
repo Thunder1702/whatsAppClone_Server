@@ -9,10 +9,12 @@ dotenv.config();
 
 const app = express();
 
+
+
 const server = require("http").createServer(app);
 const options = {
   cors: {
-    origin: "http://localhost:4200",
+    origin: process.env.cors_origin,
     methods: ["GET", "POST"],
   },
 };

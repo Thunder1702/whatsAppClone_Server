@@ -5,7 +5,7 @@
 -- Dumped from database version 13.1
 -- Dumped by pg_dump version 13.1
 
--- Started on 2021-01-06 16:11:55
+-- Started on 2021-01-17 17:03:05
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -28,12 +28,12 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.contact (
-    id numeric,
     first_name text,
     last_name text,
     email text,
     phone_number numeric,
-    users_contact text
+    users_contact text,
+    contact_username text
 );
 
 
@@ -48,8 +48,7 @@ CREATE TABLE public.message (
     id numeric,
     message_to text,
     message_from text,
-    message_text text,
-    read boolean
+    message_text text
 );
 
 
@@ -61,9 +60,7 @@ ALTER TABLE public.message OWNER TO postgres;
 --
 
 CREATE TABLE public.photo (
-    id numeric,
     url text,
-    description text,
     uploaded_by text
 );
 
@@ -79,7 +76,7 @@ CREATE TABLE public.users (
     profilbild text,
     status text,
     name text,
-    password character(32),
+    password text,
     email text
 );
 
@@ -92,8 +89,14 @@ ALTER TABLE public.users OWNER TO postgres;
 -- Data for Name: contact; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.contact (id, first_name, last_name, email, phone_number, users_contact) FROM stdin;
-0	Tester	Testnachname	test@nomail.com	1111111111	testUser
+COPY public.contact (first_name, last_name, email, phone_number, users_contact, contact_username) FROM stdin;
+Tester	Testnachname	test@nomail.com	1111111111	testUser	\N
+Klaus	Heinz	test0@no-mail.com	123456789	Larissa	test0
+Lari	Fari	larissa@test.com	2222222	test0	Larissa
+Testeer	TestHerr	test@nomail.com	23687	Larissa	TesterUsername
+Test1	Herr Test	test1@nomail.com	100100	Larissa	test1
+Lari	Fari	larissa@test.com	10010010	test1	Larissa
+Klea	Lula	hasttest@nomail.com	7777777	Larissa	hashtest
 \.
 
 
@@ -103,10 +106,35 @@ COPY public.contact (id, first_name, last_name, email, phone_number, users_conta
 -- Data for Name: message; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.message (id, message_to, message_from, message_text, read) FROM stdin;
-0	testUser	0	test	f
-1	0	testUser	testTest	f
-2	testUser	1	blablabla	f
+COPY public.message (id, message_to, message_from, message_text) FROM stdin;
+2	test0	Larissa	Hallo test0 wie gehts?
+0	testUser	0	test
+1	0	testUser	testTest
+3	Larissa	test0	Danke mir geht es gut und dir Larissa?
+4	test0	Larissa	auch gut.
+5	test0	Larissa	was gibt es neues?
+6	Larissa	test0	nicht viel, bei dir?
+7	test0	Larissa	alles beim alten :D
+8	Larissa	test0	das ist gut
+9	test1	Larissa	Hallo test1, steht das Meeting noch ?
+10	Larissa	test1	Hallo , soweit ich weiß alles noch beim alten :D
+11	test1	Larissa	gut dann sehen wir uns eh später :)
+12	Larissa	test1	passt bis dann
+13	Larissa	test1	Vergiss nicht auf die Kekse !!!!!!!!!!!!!!!!!
+14	test1	Larissa	Nein keine Angst :'D
+15	Larissa	test1	Hallo, ich will die neue Funktion testen. 
+16	test1	Larissa	scheint zu funktionieren
+17	test1	Larissa	nein es funktioniert doch nicht
+18	Larissa	test1	test test
+19	test0	Larissa	Hallo test0 TEST
+20	Larissa	test0	Hallo zurück Larissa TEST
+21	test1	Larissa	Hallo test1
+22	Larissa	test1	Hallo Larissa
+23	test0	Larissa	Hallo test0
+24	Larissa	test0	hallo zurück
+25	Larissa	test1	hallo
+26	test1	Larissa	hallo 2
+27	Larissa	test1	hallo 3
 \.
 
 
@@ -116,9 +144,10 @@ COPY public.message (id, message_to, message_from, message_text, read) FROM stdi
 -- Data for Name: photo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.photo (id, url, description, uploaded_by) FROM stdin;
-0	http://test.at	testDesc	testUser
-1	http://test.at	testDesc	0
+COPY public.photo (url, uploaded_by) FROM stdin;
+	test0
+	test1
+bild_3.jpg	Larissa
 \.
 
 
@@ -129,8 +158,12 @@ COPY public.photo (id, url, description, uploaded_by) FROM stdin;
 --
 
 COPY public.users (profilbild, status, name, password, email) FROM stdin;
-		Test	test                            	\N
-bild.jpg	Hallo ich benutze WhatsApp	Testname	test1234                        	\N
+		Test	test	\N
+bild.jpg	Hallo ich benutze WhatsApp	Testname	test1234	\N
+		Larissa	12345	larissa@test.com
+		test0	333	test0@no-mail.com
+		test1	4444	test1@nomail.com
+		hashtest	$2b$10$9sS.P31nX.CZwWgK2cwIxOp/UsM469xqQ8kzdF5nrlTqJ7LDh3Fhq	hasttest@nomail.com
 \.
 
 
@@ -174,7 +207,7 @@ GRANT ALL ON TABLE public.users TO whatsapp_root;
 GRANT ALL ON TABLE public.users TO gallery_root;
 
 
--- Completed on 2021-01-06 16:11:56
+-- Completed on 2021-01-17 17:03:05
 
 --
 -- PostgreSQL database dump complete
